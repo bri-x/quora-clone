@@ -1,8 +1,43 @@
 <html>
 	<head>
-		<title>Sinatra Framework</title>
+		<title>Quora</title>
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Cabin|Megrim|Raleway" rel="stylesheet"> 
+		<link href="/css/application.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
-		<%= yield %>
+		<div id="wrapper">
+			<div class="message">
+				<% if @messages %>
+					<% @messages.each do |m| %>
+						<%= m %><br />
+					<% end %>
+				<% end %>
+			</div>
+			<% if logged_in %>
+				<div id="header">
+					<span id="title"><a href='/'>Quora</a></span>
+					<span id="askq"><a href='/questions/new'>Ask a Question</a></span>
+					<span><a href='/'>Read</a></span>
+					<span><a href='/unanswered'>Answer</a></span>
+					<span><a href='/users/<%= current_user.id %>'>Profile</a></span>
+				</div>
+				<div id="page">
+					<div class="content">
+						<%= yield %>
+					</div>
+					<div id="footer">
+						Copyright © 2016 Brigitte
+					</div>
+				</div>
+			<% else %>
+				<div class="content2">
+						<%= yield %>
+				</div>
+				<div id="footer-2">
+						Copyright © 2016 Brigitte
+					</div>
+				</div>
+			<% end %>
 	</body>
 </html>

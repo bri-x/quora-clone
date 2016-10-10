@@ -1,0 +1,26 @@
+<div class="lmargin"></div>
+<div class="index">
+	<div class="top">
+		<h2><a href="/users/<%= current_user.id %>">Hi, <%= current_user.name %></a></h2>
+		<a href="/questions/new">Would you like to ask a question?</a><br/>
+	</div>
+	<!-- print out questions -->
+	<% @questions.each do |q| %>
+		<div class="question">
+			<div class="information"> <!-- header -->
+				<%= q.answered ? "Answer written" : "Unanswered" %> • 
+				<%= q.created_at.strftime('%b %d, %Y') %> • 
+				Asked by <%= q.user.name %>
+			</div>
+			<a href='/questions/<%= q.id %>'><h3><%= q.title %></h3></a>
+			<p><%= q.description %></p><br />
+			<div class="answer"><%= q.answers.count %> answers</div>
+			<% if current_user.id == q.user_id %>
+				<%= edit_delete_question %>
+			<% else %>
+				<%= answer_question %>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+<div class="rmargin"></div>

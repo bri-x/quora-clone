@@ -1,0 +1,19 @@
+<%= @user.name %>'s answers<br />
+<% if @user.answers %>
+	<% @user.answers.each do |a| %>
+		<h3><%= a.question.title %></h3><br />
+		<%= a.text %><br />
+		<% if current_user.id == @user.id %>
+			<form action="/questions/<%= a.question.id %>/answers/<%= a.id %>/edit" method="get">
+				<input type="submit" value="Edit">
+			</form>
+			<form action="/questions/<%= a.question.id %>/answers/<%= a.id %>" method="post">
+				<input type="hidden" name="_method" value="delete">
+				<input type="submit" value="Delete">
+			</form>
+		<% end %>
+		<br />
+	<% end %>
+<% else %>
+	This user has not answered any question
+<% end %>

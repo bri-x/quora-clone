@@ -1,0 +1,15 @@
+<div class="lmargin"></div>
+<div class="index">
+	profile picture here <br /><br />
+	<% if current_user.id == @user.id %>
+	<form method="post" action="/logout">
+			<input type="submit" value="Logout">
+	</form>
+	<% end %>
+	<%= @user.name %><br />
+	<%= @user.email %><br /><br />
+	<a href='/users/<%= @user.id %>/questions'>Questions</a><br />
+	<a href='/users/<%= @user.id %>/answers'>Answers</a><br />
+	
+</div>
+<div class="rmargin"></div>

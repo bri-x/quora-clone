@@ -1,0 +1,37 @@
+<h2><%= @question.title %></h2><br />
+<%= @question.description %><br /><br />
+
+<% if current_user.id == @question.user_id %>
+	<form action="/questions/<%= @question.id %>/edit" method="get">
+		<input type="submit" value="Edit">
+	</form>
+	<form action="/questions/<%= @question.id %>" method="post">
+		<input type="hidden" name="_method" value="delete">
+		<input type="submit" value="Delete">
+	</form>
+<% elsif logged_in %>
+<form action="/questions/<%= @question.id %>/answers/new" method="get">
+	<input type="submit" value="Answer">
+</form>
+<% end %>
+
+<% if @question.answers.first %>
+	<% @question.answers.each do |answer| %>
+		<%= answer.user.name %><br />
+		<%= answer.text %><br />
+		<%= answer.created_at %><br />
+		<% if current_user.id == answer.user_id %>
+			<form action="/questions/<%= @question.id %>/answers/<%= answer.id %>/edit" method="edit">
+				<input type="submit" value="Edit">
+			</form>
+			<form action="/questions/<%= @question.id %>/answers/<%= answer.id %>" method="post">
+				<input type="hidden" name="_method" value="delete">
+				<input type="submit" value="Delete">
+			</form>
+		<% end %>
+		<br /><br />
+	<% end %>
+<% else %>
+	This question has not been answered yet :(
+<% end %>
+

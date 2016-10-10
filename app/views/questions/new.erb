@@ -1,0 +1,12 @@
+<% if @messages %>
+	<% @messages.each do |m| %>
+		<%= m %><br />
+	<% end %>
+<% end %>
+<br /><br />
+
+<form method="post" action="/questions">
+	<input type="text" name="question[title]" value="<%= @question.title if @question%>">
+	<input type="text" name="question[description]" value="<%= @question.description if @question%>">
+	<input type="submit" value="Ask question">
+</form>

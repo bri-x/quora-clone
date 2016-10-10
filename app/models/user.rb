@@ -4,12 +4,10 @@ class User < ActiveRecord::Base
 	validates :password, presence: { on: create }, length: { minimum: 8 }
 	has_secure_password
 
+	has_many :questions
+	has_many :answers
+
 	def self.login(email, password)
-		user = User.where('email = ?', email)[0]
-		if user
-			return user.authenticate(password) ? user : false
-		else
-			return false
-		end
+		User.find_by('email = ?', email).try(:authenticate, password)
 	end
 end

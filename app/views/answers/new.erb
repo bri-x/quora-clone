@@ -1,0 +1,5 @@
+<%= @question.title if @question %>
+<form method="post" action="/questions/<%= @question.id %>/answers">
+	<textarea name="answer[text]" rows="10" cols="20" required></textarea><br />
+	<input type="submit" value="Answer">
+</form>

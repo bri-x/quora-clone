@@ -1,0 +1,9 @@
+<%= @question.title %><br />
+<%= @question.description %><br /><br />
+
+<form action="/questions/<%= @question.id %>" method="post">
+	<input type="hidden" name="_method" value="put">
+	Title<input type="text" name="question[title]"><br />
+  Description<textarea name="question[description]" rows="10" cols="80"></textarea><br />
+	<input type="submit" value="Edit">
+</form>

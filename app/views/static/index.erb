@@ -1,2 +1,25 @@
-<h1>Hello World</h1>
-<p>See Me in views/static/index.html.erb</p>
+<div class="lmargin"></div>
+<div class="container">
+	<div class="title">Quora</div>
+	<div class="sub">The best answer to any question</div>
+	<div class="box">
+		<span>
+			<h4>Sign Up</h4>
+			<form method="post" action="/sign_up">
+				<input type="text" placeholder="Full name" name="user[name]" required><br />
+				<input type="text" placeholder="Email" name="user[email]" required><br />
+				<input type="password" placeholder="Password" name="user[password]" required><br />
+				<input type="submit" value="Sign up" class="btn btn-warning">
+			</form>
+		</span>
+		<span>
+			<h4>Login</h4>
+			<form method="post" action="/login">
+				<input type="text" placeholder="Email" name="user[email]" required><br />
+				<input type="password" placeholder="Password" name="user[password]" required><br />
+				<input type="submit" value="Login" class="btn btn-warning">
+			</form>
+		</span>
+	</div>
+</div>
+<div class="rmargin"></div>
