@@ -16,4 +16,23 @@ helpers do
 	def answer_question
 		'<form action="/questions/<%= q.id %>/answers/new" method="get"><input type="submit" value="Answer this" class="btn btn-primary"></form>'
 	end
+
+	def current_position
+		request.env["REQUEST_URI"]
+	end
+
+	def count_votes(type, id)
+		score = 0
+		object = type.capitalize.constantize.find(id)
+		method_name = type + "_votes"
+		object.send(method_name).each { |vote| vote.count ? score += 1 : score -= 1 }
+		
+		if score > 0
+			return "<span style='color: green'>+#{score}</span>"
+		elsif score < 0
+			return "<span style='color: red'>#{score}</span>"
+		else
+			return "0"
+		end
+	end
 end

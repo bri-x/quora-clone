@@ -1,6 +1,11 @@
+<div class="lmargin"></div>
+<div class="index">
+<!-- show question -->
 <h2><%= @question.title %></h2><br />
 <%= @question.description %><br /><br />
+<%= count_votes("question", @question.id) %><br /><br />
 
+<!-- owner can edit and delete -->
 <% if current_user.id == @question.user_id %>
 	<form action="/questions/<%= @question.id %>/edit" method="get">
 		<input type="submit" value="Edit">
@@ -9,12 +14,21 @@
 		<input type="hidden" name="_method" value="delete">
 		<input type="submit" value="Delete">
 	</form>
+
+<!-- users can answer -->
 <% elsif logged_in %>
 <form action="/questions/<%= @question.id %>/answers/new" method="get">
 	<input type="submit" value="Answer">
 </form>
 <% end %>
 
+<!-- upvote or downvote -->
+<form action="/questions/<%= @question.id %>/question_votes" method="post">
+	<input type="submit" name="action" value="Upvote" />
+	<input type="submit" name="action" value="Downvote" />
+</form>
+
+<!-- show answers for this question -->
 <% if @question.answers.first %>
 	<% @question.answers.each do |answer| %>
 		<%= answer.user.name %><br />
@@ -29,9 +43,17 @@
 				<input type="submit" value="Delete">
 			</form>
 		<% end %>
+		<br />
+		<%= count_votes("answer", answer.id) %><br />
+		<form action="/questions/<%= @question.id %>/answers/<%= answer.id %>/answer_votes" method="post">
+			<input type="submit" name="action" value="Upvote" />
+			<input type="submit" name="action" value="Downvote" />
+		</form>
 		<br /><br />
 	<% end %>
 <% else %>
 	This question has not been answered yet :(
 <% end %>
+</div>
+<div class="rmargin"></div>
 

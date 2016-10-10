@@ -1,9 +1,11 @@
 <div class="lmargin"></div>
 <div class="index">
+	<!-- greet user -->
 	<div class="top">
 		<h2><a href="/users/<%= current_user.id %>">Hi, <%= current_user.name %></a></h2>
 		<a href="/questions/new">Would you like to ask a question?</a><br/>
 	</div>
+
 	<!-- print out questions -->
 	<% @questions.each do |q| %>
 		<div class="question">
@@ -17,7 +19,7 @@
 			<div class="answer"><%= q.answers.count %> answers</div>
 			<% if current_user.id == q.user_id %>
 				<%= edit_delete_question %>
-			<% else %>
+			<% elsif logged_in %>
 				<%= answer_question %>
 			<% end %>
 		</div>

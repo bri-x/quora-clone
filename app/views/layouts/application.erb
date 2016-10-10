@@ -17,10 +17,10 @@
 			<% if logged_in %>
 				<div id="header">
 					<span id="title"><a href='/'>Quora</a></span>
-					<span id="askq"><a href='/questions/new'>Ask a Question</a></span>
-					<span><a href='/'>Read</a></span>
-					<span><a href='/unanswered'>Answer</a></span>
-					<span><a href='/users/<%= current_user.id %>'>Profile</a></span>
+					<span id="askq" <%= 'class = "selected"' if current_position == '/questions/new' %>><a href='/questions/new'>Ask a Question</a></span>
+					<span <%= 'class = "selected"' if current_position == '/' %>><a href='/'>Read</a></span>
+					<span <%= 'class = "selected"' if current_position == '/unanswered' %>><a href='/unanswered'>Answer</a></span>
+					<span <%= 'class = "selected"' if current_position == "/users/#{current_user.id}" %>><a href='/users/<%= current_user.id %>'>Profile</a></span>
 				</div>
 				<div id="page">
 					<div class="content">

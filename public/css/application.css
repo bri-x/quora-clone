@@ -25,6 +25,14 @@ body {
 	align-items: center;
 }
 
+#header a {
+	text-decoration: none;
+}
+
+.selected a {
+	color: #D9B346;
+}
+
 #page {
 	width: 100%;
 	align-self: center;
