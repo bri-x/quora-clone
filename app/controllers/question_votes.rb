@@ -1,6 +1,6 @@
 post '/questions/:id/question_votes' do
-	params[:action] == "Downvote" ? count = false : count = true
-	@qv = QuestionVote.where('user_id = ? AND question_id = ?', current_user.id, params[:id])[0]
+	params.keys[0] == "Downvote" ? count = false : count = true
+	@qv = QuestionVote.where(user_id: current_user.id, question_id: params[:id])[0]
 	if @qv
 		if @qv.count == count
 		else
@@ -12,5 +12,6 @@ post '/questions/:id/question_votes' do
 		@qv = QuestionVote.new(user_id: current_user.id, question_id: params[:id], count: count)
 		@qv.save
 	end
+	return count_votes("question", params[:id]).to_s
 	redirect "/questions/#{params[:id]}"
 end

@@ -1,5 +1,11 @@
-<%= @question.title if @question %>
-<form method="post" action="/questions/<%= @question.id %>/answers">
-	<textarea name="answer[text]" rows="10" cols="20" required></textarea><br />
-	<input type="submit" value="Answer">
-</form>
+<div class="lmargin"></div>
+<div class="index">
+	<a href='/questions/<%= @question.id %>'><h3><%= @question.title %></h3></a>
+	<div class="editBox">
+		<form method="post" action="/questions/<%= @question.id %>/answers">
+			<textarea name="answer[text]" rows="10" cols="50" required></textarea><br />
+			<input type="submit" value="Answer">
+		</form>
+	</div>
+</div>
+<div class="rmargin"></div>

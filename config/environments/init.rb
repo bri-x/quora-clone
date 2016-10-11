@@ -24,6 +24,8 @@ require 'uri'
 require 'bcrypt'
 require 'byebug'
 require 'faker'
+require 'will_paginate'
+require 'will_paginate/active_record'
 ######################################################################
 
 

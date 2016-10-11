@@ -175,10 +175,11 @@ body {
 	flex: 6 6 6;
 }
 
-/*.index {
-	background-color: rgba(255, 255, 255, 0.7);
+.index {
+	min-width: 50%;
+	width: 50%;
 }
-*/
+
 .index .top {
 	text-align: center;
 	border-bottom: 4px double #576794;
@@ -198,9 +199,12 @@ body {
 .index .question {
 	border-bottom: 1px solid #AAAAEE;
 	padding: 20px;
+	line-height: 1.2em;
+	height: auto;
+	text-align: justify;
 }
 
-.index .question h3 {
+h3 {
 	font-family: 'Raleway', sans-serif;
 	font-weight: bold;
 	color: #D9B346;
@@ -219,4 +223,151 @@ body {
 	font-size: 90%;
 	opacity: 0.7;
 	margin-bottom: 5px;
+}
+
+.index .bottom {
+	text-align: center;
+}
+
+.question_options {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.question_options span {
+	flex-basis: content;
+}
+
+.question_options .middle {
+	flex: 4 0 auto;
+}
+
+.question_options input {
+	margin-right: 10px;
+}
+
+.my_qna_header {
+	display: flex;
+	background-color: rgba(200,200,200,0.5);
+	font-size: 150%;
+}
+
+.my_qna_header div {
+	width: 50%;
+	border: 1px solid #576794;
+	border-top: 0px;
+	padding: 0px 5px;
+	text-align: center;
+}
+
+.my_qna_display {
+	border-left: 1px solid #576794;
+	border-right: 1px solid #576794;
+	background-color: rgba(255,255,255,0.5);
+	margin-bottom: 20px;
+}
+
+.my_qna_header .selected_header {
+	background-color: rgba(255,255,255,0.5);
+	border-bottom: none;
+}
+
+.answerWrapper {
+	padding: 10px 0px;
+}
+
+.answerText {
+	padding: 5px 0px;
+}
+
+.editBox input[type="submit"] {
+	margin-top: 10px;
+}
+
+.editBox input[type="text"] {
+	margin-bottom: 10px;
+	width: 82%;
+}
+
+#loginPopup {
+	display: none;
+}
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000;}
+
+/* Container */
+#simplemodal-container {
+	height:360px; 
+	width:360px; 
+	background: repeating-linear-gradient(
+  	-55deg,
+  	#051520,
+  	#051520 1px,
+  	#071724 10px,
+  	#071724 11px
+	);
+	padding:12px;
+}
+
+#simplemodal-container .simplemodal-data {
+	padding:8px;
+	position: absolute;
+	left: 15%;
+	top: 10%;
+	font-family: 'Cabin', sans-serif;
+}
+
+#simplemodal-container h3 {
+	color: #D9B346;
+	font-family: 'Megrim', cursive;
+	font-size: 300%;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#simplemodal-container h4 {
+	color: #fff;
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+}
+
+#simplemodal-container input {
+	margin: 5px 0px;
+}
+
+#simplemodal-container #columnPopup {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#simplemodal-container input[type="submit"] {
+	position: absolute;
+	left: 40%;
+}
+
+.morecontent span {
+    display: none;
+}
+
+.morelink {
+    display: block;
+}
+
+.answer .information {
+	color: blue;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.answer .information a {
+	color: blue;
+}
+
+.answer {
+	line-height: 1.5em;
+	color: black;
 }

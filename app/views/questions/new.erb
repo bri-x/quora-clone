@@ -1,12 +1,13 @@
-<% if @messages %>
-	<% @messages.each do |m| %>
-		<%= m %><br />
-	<% end %>
-<% end %>
-<br /><br />
-
-<form method="post" action="/questions">
-	<input type="text" name="question[title]" value="<%= @question.title if @question%>">
-	<input type="text" name="question[description]" value="<%= @question.description if @question%>">
-	<input type="submit" value="Ask question">
-</form>
+<div class="lmargin"></div>
+<div class="index">
+	<br />
+	<div class="editBox">
+		<form method="post" action="/questions">
+			Title:<br /><input type="text" name="question[title]"><br />
+			Tags:<br /><input type="text" name="question[tag]" placeholder="separate each tag with a comma"><br />
+		  Description:<br /><textarea name="question[description]" rows="10" cols="50"></textarea><br />
+			<input type="submit" value="Ask">
+		</form>
+	</div>
+</div>
+<div class="rmargin"></div>

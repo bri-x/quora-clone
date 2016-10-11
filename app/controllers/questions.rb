@@ -4,6 +4,7 @@ end
 
 post '/questions' do
 	@question = Question.new(params[:question])
+	@question.tag = @question.tag.split(', ').capitalize.sort.join(', ')
 	@question.user_id = current_user.id
 	byebug
 	if @question.save
@@ -15,12 +16,12 @@ post '/questions' do
 end
 
 get '/questions' do
-	@questions = Question.order(created_at: :desc).limit(25)
+	@questions = Question.order('created_at DESC').page(params[:page])
 	erb :"users/index"
 end
 
 get '/unanswered' do
-	@questions = Question.where('answered = false')
+	@questions = Question.where(answered: false).order('created_at DESC').page(params[:page])
 	erb :"users/index"
 end
 

@@ -1,28 +1,62 @@
-<div class="lmargin"></div>
+<div class="lmargin">
+	Popular categories: <br />
+	<% tag.each do |t| %>
+		<%= t %><br />
+	<% end %>
+</div>
 <div class="index">
 	<!-- greet user -->
+	<% if logged_in %>
 	<div class="top">
 		<h2><a href="/users/<%= current_user.id %>">Hi, <%= current_user.name %></a></h2>
 		<a href="/questions/new">Would you like to ask a question?</a><br/>
 	</div>
+	<% end %>
 
 	<!-- print out questions -->
 	<% @questions.each do |q| %>
 		<div class="question">
 			<div class="information"> <!-- header -->
 				<%= q.answered ? "Answer written" : "Unanswered" %> • 
-				<%= q.created_at.strftime('%b %d, %Y') %> • 
-				Asked by <%= q.user.name %>
+				<%= q.tag.split(', ').first(2).join(', ') %> • 
+				<%= q.created_at.strftime('%b %d, %Y') %>
 			</div>
 			<a href='/questions/<%= q.id %>'><h3><%= q.title %></h3></a>
-			<p><%= q.description %></p><br />
-			<div class="answer"><%= q.answers.count %> answers</div>
-			<% if current_user.id == q.user_id %>
-				<%= edit_delete_question %>
-			<% elsif logged_in %>
-				<%= answer_question %>
+			<% if q.answered %>
+				<div class="answer"><%= q.answers.count %> answers</div>
+			<% end %>
+			<div class = "question_options">
+			<% if logged_in %>
+				<% if current_user.id == q.user_id %>
+					<%= own_q_votes(q.id) %>
+					<span class="middle"></span>
+					<%= edit_delete_question(q.id) %>
+				<% end %>
+			<% else %>
+				<%= vote_question(q.id) %>
+				<span class="middle"></span>
+				<%= answer_question(q.id) %>
+			<% end %>
+			</div>
+			<% if q.answered %>
+				<% answer = q.answers.first %>
+				<div class="answer">
+				<div class="information">
+					<a href="/users/<%= answer.user_id %>"><%= answer.user.name %></a> • 
+					<%= answer.updated_at == answer.created_at ? "Answered on" : "Edited on" %>
+					<%= answer.updated_at.strftime('%b %d, %Y') %>
+				</div>
+				<div class="more">
+					<%= answer.text %>
+				</div>
+				</div>
 			<% end %>
 		</div>
 	<% end %>
+
+	<div class="bottom">
+		<%= page_entries_info @questions %><br />
+		<%= will_paginate @questions, :style => 'color:blue' %>
+	</div>
 </div>
 <div class="rmargin"></div>

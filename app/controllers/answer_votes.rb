@@ -1,6 +1,6 @@
-post '/questions/:id/answers/:answer_id/answer_votes' do
-	params[:action] == "Downvote" ? count = false : count = true
-	@av = AnswerVote.where('user_id = ? AND answer_id = ?', current_user.id, params[:answer_id])[0]
+post '/questions/:question_id/answers/:answer_id/answer_votes' do
+	params.keys[0] == "Downvote" ? count = false : count = true
+	@av = AnswerVote.where(user_id: current_user.id, answer_id: params[:answer_id])[0]
 	if @av
 		if @av.count == count
 		else
@@ -12,5 +12,6 @@ post '/questions/:id/answers/:answer_id/answer_votes' do
 		@av = AnswerVote.new(user_id: current_user.id, answer_id: params[:answer_id], count: count)
 		@av.save
 	end
-	redirect "/questions/#{params[:id]}"
+	return count_votes("answer", params[:answer_id]).to_s
+	redirect "/questions/#{params[:question_id]}"
 end

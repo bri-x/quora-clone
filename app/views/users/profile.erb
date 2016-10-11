@@ -1,15 +1,49 @@
 <div class="lmargin"></div>
+
 <div class="index">
-	profile picture here <br /><br />
-	<% if current_user.id == @user.id %>
-	<form method="post" action="/logout">
-			<input type="submit" value="Logout">
-	</form>
-	<% end %>
-	<%= @user.name %><br />
-	<%= @user.email %><br /><br />
-	<a href='/users/<%= @user.id %>/questions'>Questions</a><br />
-	<a href='/users/<%= @user.id %>/answers'>Answers</a><br />
+	
+	<div class="top">
+		<h2><%= @user.name %></h2>
+		<%= @user.email %><br /><br />
+		<% if logged_in && current_user.id == @user.id %>
+			<form method="post" action="/logout">
+					<input type="submit" value="Logout">
+			</form>
+		<% end %>
+	</div>
+	<div class="my_qna_header">
+		<div class="selected_header"><a href='/users/<%= @user.id %>'>Questions</a></div>
+		<div><a href='/users/<%= @user.id %>/answers'>Answers</a></div>
+	</div>
+	<div class="my_qna_display">
+
+			<% if @user.questions %>
+				<% @user.questions.each do |q| %>
+					<div class="question">
+						<div class="information"> <!-- header -->
+							<%= q.answered ? "Answer written" : "Unanswered" %> • 
+							<%= q.tag.split(', ').first(2).join(', ') %> • 
+							<%= q.created_at.strftime('%b %d, %Y') %>
+						</div>
+						<a href='/questions/<%= q.id %>'><h3><%= q.title %></h3></a>
+						<% if q.answered %>
+							<div class="answer"><%= q.answers.count %> answers</div>
+						<% end %>
+						<div class = "question_options">
+						<% if logged_in && current_user.id == q.user_id %>
+							<%= own_q_votes(q.id) %>
+							<span class="middle"></span>
+							<%= edit_delete_question(q.id) %>
+						<% else %>
+							<%= vote_question(q.id) %>
+							<span class="middle"></span>
+							<%= answer_question(q.id) %>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
 	
 </div>
 <div class="rmargin"></div>

@@ -1,59 +1,52 @@
 <div class="lmargin"></div>
 <div class="index">
-<!-- show question -->
-<h2><%= @question.title %></h2><br />
-<%= @question.description %><br /><br />
-<%= count_votes("question", @question.id) %><br /><br />
 
-<!-- owner can edit and delete -->
-<% if current_user.id == @question.user_id %>
-	<form action="/questions/<%= @question.id %>/edit" method="get">
-		<input type="submit" value="Edit">
-	</form>
-	<form action="/questions/<%= @question.id %>" method="post">
-		<input type="hidden" name="_method" value="delete">
-		<input type="submit" value="Delete">
-	</form>
-
-<!-- users can answer -->
-<% elsif logged_in %>
-<form action="/questions/<%= @question.id %>/answers/new" method="get">
-	<input type="submit" value="Answer">
-</form>
-<% end %>
-
-<!-- upvote or downvote -->
-<form action="/questions/<%= @question.id %>/question_votes" method="post">
-	<input type="submit" name="action" value="Upvote" />
-	<input type="submit" name="action" value="Downvote" />
-</form>
+		<div class="question">
+			<div class="information"> <!-- header -->
+				Asked by <%= @question.user.name %><br />
+				Categories: <%= @question.tag %>
+			</div>
+			<a href='/questions/<%= @question.id %>'><h3><%= @question.title %></h3></a>
+			<p><%= @question.description %></p><br />
+			<div class="answer"><%= @question.answers.count %> answers</div>
+			<div class = "question_options">
+			<% if logged_in && current_user.id == @question.user_id %>
+				<%= own_q_votes(@question.id) %>
+				<span class="middle"></span>
+				<%= edit_delete_question(@question.id) %>
+			<% else %>
+				<%= vote_question(@question.id) %>
+				<span class="middle"></span>
+				<%= answer_question(@question.id) %>
+			<% end %>
+			</div>
+		</div>
 
 <!-- show answers for this question -->
 <% if @question.answers.first %>
 	<% @question.answers.each do |answer| %>
-		<%= answer.user.name %><br />
-		<%= answer.text %><br />
-		<%= answer.created_at %><br />
-		<% if current_user.id == answer.user_id %>
-			<form action="/questions/<%= @question.id %>/answers/<%= answer.id %>/edit" method="edit">
-				<input type="submit" value="Edit">
-			</form>
-			<form action="/questions/<%= @question.id %>/answers/<%= answer.id %>" method="post">
-				<input type="hidden" name="_method" value="delete">
-				<input type="submit" value="Delete">
-			</form>
-		<% end %>
-		<br />
-		<%= count_votes("answer", answer.id) %><br />
-		<form action="/questions/<%= @question.id %>/answers/<%= answer.id %>/answer_votes" method="post">
-			<input type="submit" name="action" value="Upvote" />
-			<input type="submit" name="action" value="Downvote" />
-		</form>
-		<br /><br />
+		<div class="answerWrapper">
+			<div class="information">
+				<a href="/users/<%= answer.user_id %>"><%= answer.user.name %></a> • 
+				<%= answer.updated_at == answer.created_at ? "Answered on" : "Edited on" %>
+				<%= answer.updated_at.strftime('%b %d, %Y') %>
+			</div>
+			<div class="answerText"><%= answer.text %></div>
+			<% if logged_in && current_user.id == answer.user_id %>
+				<div class = "question_options">
+					<%= own_a_votes(answer.id) %>
+					<span class="middle"></span>
+					<%= edit_delete_answer(@question.id, answer.id) %>
+				</div>
+			<% else %>
+				<%= vote_answer(answer.id) %>
+			<% end %>
+		</div>
 	<% end %>
 <% else %>
-	This question has not been answered yet :(
+	<div class="answerWrapper">
+		This question has not been answered yet :(
+	</div>
 <% end %>
 </div>
 <div class="rmargin"></div>
-

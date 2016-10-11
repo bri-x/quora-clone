@@ -16,12 +16,6 @@ post '/questions/:id/answers' do
 	end
 end
 
-get '/questions/:id/answers/:answer_id' do
-	@answer = Answer.find(params[:answer_id])
-	@question = @answer.question
-	erb :'answers/show'
-end
-
 get '/questions/:id/answers/:answer_id/edit' do
 	@answer = Answer.find(params[:answer_id])
 	erb :'answers/edit'
@@ -30,7 +24,7 @@ end
 put '/questions/:id/answers/:answer_id' do
 	@answer = Answer.find(params[:answer_id])
 	@answer.update(params[:answer])
-	redirect "questions/#{params[:id]}/answers/#{@answer.id}"
+	redirect "questions/#{params[:id]}"
 end
 
 delete '/questions/:id/answers/:answer_id' do

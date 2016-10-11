@@ -1,19 +1,45 @@
-<%= @user.name %>'s answers<br />
-<% if @user.answers %>
-	<% @user.answers.each do |a| %>
-		<h3><%= a.question.title %></h3><br />
-		<%= a.text %><br />
-		<% if current_user.id == @user.id %>
-			<form action="/questions/<%= a.question.id %>/answers/<%= a.id %>/edit" method="get">
-				<input type="submit" value="Edit">
-			</form>
-			<form action="/questions/<%= a.question.id %>/answers/<%= a.id %>" method="post">
-				<input type="hidden" name="_method" value="delete">
-				<input type="submit" value="Delete">
+<div class="lmargin"></div>
+<div class="index">
+	
+	<div class="top">
+		<h2><%= @user.name %></h2>
+		<%= @user.email %><br /><br />
+		<% if logged_in && current_user.id == @user.id %>
+			<form method="post" action="/logout">
+					<input type="submit" value="Logout">
 			</form>
 		<% end %>
-		<br />
-	<% end %>
-<% else %>
-	This user has not answered any question
-<% end %>
+	</div>
+	<div class="my_qna_header">
+		<div><a href='/users/<%= @user.id %>'>Questions</a></div>
+		<div class="selected_header"><a href='/users/<%= @user.id %>/answers'>Answers</a></div>
+	</div>
+	<div class="my_qna_display">
+			<% if @user.answers %>
+				<% @user.answers.each do |a| %>
+				<div class="question">
+					<h3><%= a.question.title %></h3><br />
+					<div class="information">
+						<%= a.user.name %> • 
+						<%= a.updated_at == a.created_at ? "Answered on" : "Edited on" %>
+						<%= a.updated_at.strftime('%b %d, %Y') %>
+					</div>
+					<%= a.text %><br />
+					<% if logged_in && current_user.id == @user.id %>
+						<form action="/questions/<%= a.question.id %>/answers/<%= a.id %>/edit" method="get">
+							<input type="submit" value="Edit">
+						</form>
+						<form action="/questions/<%= a.question.id %>/answers/<%= a.id %>" method="post">
+							<input type="hidden" name="_method" value="delete">
+							<input type="submit" value="Delete">
+						</form>
+					<% end %>
+					<br />
+				</div>
+				<% end %>
+			<% else %>
+				This user has not answered any question
+			<% end %>
+	</div>
+</div>
+<div class="rmargin"></div>

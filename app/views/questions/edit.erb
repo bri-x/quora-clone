@@ -1,9 +1,13 @@
-<%= @question.title %><br />
-<%= @question.description %><br /><br />
-
-<form action="/questions/<%= @question.id %>" method="post">
-	<input type="hidden" name="_method" value="put">
-	Title<input type="text" name="question[title]"><br />
-  Description<textarea name="question[description]" rows="10" cols="80"></textarea><br />
-	<input type="submit" value="Edit">
-</form>
+<div class="lmargin"></div>
+<div class="index">
+	<div class="editBox">
+		<form action="/questions/<%= @question.id %>" method="post">
+			<input type="hidden" name="_method" value="put">
+			Title:<br /><input type="text" name="question[title]" value="<%= @question.title %>"><br />
+			Tags:<br /><input type="text" name="question[tag]" value="<%= @question.tag %>"><br />
+		  Description:<br /><textarea name="question[description]" rows="10" cols="50"><%= @question.description %></textarea><br />
+			<input type="submit" value="Edit">
+		</form>
+	</div>
+</div>
+<div class="rmargin"></div>

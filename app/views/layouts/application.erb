@@ -4,6 +4,11 @@
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Cabin|Megrim|Raleway" rel="stylesheet"> 
 		<link href="/css/application.css" type="text/css" rel="stylesheet">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 		<script src="/js/jquery.simplemodal-1.4.4.js"></script>
+ 		<script src="/js/application.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -14,13 +19,15 @@
 					<% end %>
 				<% end %>
 			</div>
-			<% if logged_in %>
+			<% if current_position != '/' || logged_in %>
 				<div id="header">
 					<span id="title"><a href='/'>Quora</a></span>
-					<span id="askq" <%= 'class = "selected"' if current_position == '/questions/new' %>><a href='/questions/new'>Ask a Question</a></span>
+					<span id="askq" <%= 'class = "selected"' if current_position == '/questions/new' %> <%= "class='need-login-ask'" if !logged_in %>><a href='/questions/new'>Ask a Question</a></span>
 					<span <%= 'class = "selected"' if current_position == '/' %>><a href='/'>Read</a></span>
 					<span <%= 'class = "selected"' if current_position == '/unanswered' %>><a href='/unanswered'>Answer</a></span>
-					<span <%= 'class = "selected"' if current_position == "/users/#{current_user.id}" %>><a href='/users/<%= current_user.id %>'>Profile</a></span>
+					<% if logged_in %>
+						<span <%= 'class = "selected"' if current_position == "/users/#{current_user.id}" %>><a href='/users/<%= current_user.id %>'>Profile</a></span>
+					<% end %>
 				</div>
 				<div id="page">
 					<div class="content">
@@ -38,6 +45,17 @@
 						Copyright © 2016 Brigitte
 					</div>
 				</div>
-			<% end %>
+		<% end %>
+		<span id="loginPopup">
+			<div id="columnPopup">
+			<h3>Quora</h3>
+			<h4>Login</h4>
+			<form method="post" action="/login">
+				<input type="text" placeholder="Email" name="user[email]" required><br />
+				<input type="password" placeholder="Password" name="user[password]" required><br />
+				<input type="submit" value="Login" class="btn btn-warning">
+			</form>
+			</div>
+		</span>
 	</body>
 </html>
