@@ -79,6 +79,26 @@ $(document).ready( function() {
         return false;
     });
 
+    $('.voting-form').on("click", ":submit", function(e){
+	    e.preventDefault();
+
+	    current = $(this).parents("form")
+	    debugger;
+
+	    $.ajax({
+		  	method: 'POST',
+		  	url: $(this).parents("form").attr("action"),
+		  	data: $(this).val(),
+		  	beforeSend: function() {
+		  		current.children().first().prop("value", "Voting...");
+		  	},
+		  	success: function(data){
+		  		current.children().first().prop("value", "Upvote | ".concat(data));
+		  	}
+
+	  	});
+		}); // end of voting-form
+
 	// $(".voting-form").submit(function( event ) {
 	//   event.preventDefault();
 
@@ -96,21 +116,3 @@ $(document).ready( function() {
 
 }); // end of document ready
 
-$(document).on("click", ":submit", function(e){
-    e.preventDefault();
-
-    current = $(this).parents("form")
-
-    $.ajax({
-  	method: 'POST',
-  	url: $(this).parents("form").attr("action"),
-  	data: $(this).val(),
-  	beforeSend: function() {
-  		current.children().first().prop("value", "Voting...");
-  	},
-  	success: function(data){
-  		current.children().first().prop("value", "Upvote | ".concat(data));
-  	}
-
-  });
-});
